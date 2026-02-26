@@ -1,3 +1,4 @@
+import os
 import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
@@ -21,6 +22,10 @@ nifty50_tickers = [
     "TCS.NS", "TATACONSUM.NS", "TATAMOTORS.NS", "TATASTEEL.NS", "TECHM.NS",
     "TITAN.NS", "ULTRACEMCO.NS", "UPL.NS", "WIPRO.NS", "ADANIENT.NS"
 ]
+folder_name = "companyreport"
+if not os.path.exists(folder_name):
+    os.makedirs(folder_name)
+    print(f"Created directory: {folder_name}")
 for ticker in nifty50_tickers:
     print(f"Fetching {ticker}...")
 
@@ -44,7 +49,7 @@ for ticker in nifty50_tickers:
     company_name = company_name.replace(" ", "_")
 
     # Save CSV
-    filename = f"{company_name}_5yr.csv"
+    filename = f"{folder_name}\\{company_name}_5yr.csv"
     df.to_csv(filename)
 
     print(f"✔ Saved: {filename}")
