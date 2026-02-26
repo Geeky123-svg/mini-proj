@@ -50,3 +50,4 @@ for ticker in nifty50_tickers:
     print(f"✔ Saved: {filename}")
 
 print("\n✅ All NIFTY 50 data saved by company name.")
+
