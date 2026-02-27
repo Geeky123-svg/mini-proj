@@ -35,13 +35,50 @@ for ticker in nifty50_tickers:
         end=end_date.strftime("%Y-%m-%d")
     )
 
+    df = df.reset_index()
+    df['Date'] = pd.to_datetime(df['Date'])
     company_name = stock.info.get("longName", ticker)
 
     # Clean filename (remove special characters)
     company_name = re.sub(r"[^\w\s-]", "", company_name)
     company_name = company_name.replace(" ", "_")
 
+    #MMoving averages for 5, 10, 20, 50 days
     df['Company'] = company_name
+    df['MA5'] = df['Close'].rolling(5).mean()
+    df['MA10'] = df['Close'].rolling(10).mean()
+    df['MA20'] = df['Close'].rolling(20).mean()
+    df['MA50'] = df['Close'].rolling(50).mean()
+
+
+    #Momentum based features
+    df['Return'] = df['Close'].pct_change()
+    df['Momentum'] = df['Close'] - df['Close'].shift(5)
+    df['ROC'] = df['Close'].pct_change(5)
+
+
+    #Volatility Features
+    df['Range'] = df['High']  - df['Low']
+    df['Volatility'] = df['Close'].rolling(10).std()
+
+    #Volume features
+    df['Vol_MA10'] = df['Volume'].rolling(10).mean()
+    df['Vol_Change'] = df['Volume'].pct_change()
+
+    #Time features
+    df['DayOfWeek'] = df['Date'].dt.dayofweek
+    df['Month'] = df['Date'].dt.month
+
+    #Exponential Moving Averages fo 10 and 20 days
+    df['EMA10'] = df['Close'].ewm(span=10).mean()
+    df['EMA20'] = df['Close'].ewm(span=20).mean()
+
+
+    #New Price Features
+    df['TypicalPrice'] = (df['High'] + df['Low'] + df['Close'])/3
+    df['CO_Diff'] = df['Close'] - df['Open']
+    
+
     if df.empty:
         print(f"⚠ No data for {ticker}")
         continue
