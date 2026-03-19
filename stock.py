@@ -21,14 +21,13 @@ nifty50_tickers = [
     "TCS.NS", "TATACONSUM.NS", "TMPV.NS", "TATASTEEL.NS", "TECHM.NS",
     "TITAN.NS", "ULTRACEMCO.NS", "UPL.NS", "WIPRO.NS", "ADANIENT.NS"
 ]
-
+print(len(nifty50_tickers))
 main_df = pd.DataFrame()
 
 for ticker in nifty50_tickers:
     print(f"Fetching {ticker}...")
 
     stock = yf.Ticker(ticker)
-
     
     df = stock.history(
         start=start_date.strftime("%Y-%m-%d"),

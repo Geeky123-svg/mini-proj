@@ -6,8 +6,8 @@ import time
 # ----------------------------
 # CONFIG
 # ----------------------------
-company_name = "Tata Consultancy Services"   # <-- Change company here
-target_date = "2025-04-21"                   # Format: YYYY-MM-DD
+company_name = "Infosys Limited"   # <-- Change company here
+target_date = "2026-03-10"                   # Format: YYYY-MM-DD
 sleep_seconds = 1
 output_csv = f"{company_name.replace(' ', '_')}_{target_date}_news.csv"
 
